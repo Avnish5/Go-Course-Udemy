@@ -7,18 +7,33 @@ func profitCalulator() {
 	var expense float64
 	var taxRate float64
 
-	fmt.Print("Revenue: ")
-	fmt.Scan(&revenue)
+	revenue = takeInput("Revenue: ")
+	expense = takeInput("Expense: ")
+	taxRate = takeInput("Tax Rate: ")
 
-	fmt.Print("Expense: ")
-	fmt.Scan(&expense)
+	ebt, profit, ratio := calulate(expense, revenue, taxRate)
 
-	fmt.Print("Tax Rate:")
-	fmt.Scan(&taxRate)
+	output(ebt, profit, ratio)
+}
 
-	ebt := expense - revenue
-	profit := ebt * (1 - taxRate/100)
-	ratio := ebt / profit
+func takeInput(infoText string) float64 {
+	var userInput float64
+	fmt.Print(infoText)
+	fmt.Scan(&userInput)
+	return userInput
+
+}
+
+func calulate(expense, revenue, taxRate float64) (ebt, profit, ratio float64) {
+
+	ebt = expense - revenue
+	profit = ebt * (1 - taxRate/100)
+	ratio = ebt / profit
+
+	return
+}
+
+func output(ebt, profit, ratio float64) {
 
 	fmt.Println(ebt)
 	fmt.Println(profit)

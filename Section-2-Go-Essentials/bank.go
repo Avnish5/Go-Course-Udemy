@@ -1,12 +1,41 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"os"
+	"strconv"
 )
+
+func getBalanceFromFile() (float64, error) {
+
+	data, err := os.ReadFile("balance.txt")
+	if err != nil {
+		return 1000, errors.New("Failed to find balance file")
+	}
+	balanceText := string(data)
+	balance, err := strconv.ParseFloat(balanceText, 64)
+	if err != nil {
+		return 1000, errors.New("Failed to parse balance")
+	}
+	return balance, nil
+
+}
+
+func writeBalanceToFile(balance float64) {
+	balanceText := fmt.Sprint(balance)
+	os.WriteFile("balance.txt", []byte(balanceText), 0644)
+
+}
 
 func bankApplication() {
 
-	balance := 1000.0
+	balance, err := getBalanceFromFile()
+	if err != nil {
+		fmt.Println("Error:")
+		fmt.Print(err)
+		panic("cannot continue")
+	}
 	fmt.Println("Welcome to Go bank")
 
 	for {
@@ -87,6 +116,7 @@ func bankApplicationSwitch() {
 				continue
 			}
 			balance += depositAmount
+			writeBalanceToFile(balance)
 			fmt.Println("Balance updated:", balance)
 
 		case 3:
@@ -99,6 +129,7 @@ func bankApplicationSwitch() {
 				continue
 			}
 			balance -= withdrawAmount
+			writeBalanceToFile(balance)
 			fmt.Println("Balance updated:", balance)
 
 		case 4:

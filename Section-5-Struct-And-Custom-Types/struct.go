@@ -1,44 +1,33 @@
 package main
 
 import (
+	"example.com/struct-app/user"
 	"fmt"
-	"time"
 )
-
-type user struct {
-	firstName string
-	lastName  string
-	birthdate string
-	createdAt time.Time
-}
 
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
 	userBirthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
 
-	var appuser user
-	appuser = user{
-		firstName: userFirstName,
-		lastName:  userLastName,
-		birthdate: userBirthdate,
-		createdAt: time.Now(),
+	var appuser, err = user.NewUser(userFirstName, userLastName, userBirthdate)
+
+	if err != nil {
+		fmt.Print(err)
+		return
 	}
 
-	outputUserData(&appuser)
-}
-func outputUserData(user *user) {
+	var admin = user.NewAdmin("dd", "fd")
+	admin.User.OutputUserData()
 
-	//struct are exception you can directly print without derefrence it
-	fmt.Println(user.firstName, user.lastName, user.birthdate, user.createdAt)
-	//printing using derefrence
-	fmt.Println((*user).firstName, (*user).lastName, (*user).birthdate, (*user).createdAt)
-
+	appuser.OutputUserData()
+	appuser.ClearUserData()
+	appuser.OutputUserData()
 }
 
 func getUserData(promptText string) string {
 	fmt.Print(promptText)
 	var value string
-	fmt.Scan(&value)
+	fmt.Scanln(&value)
 	return value
 }

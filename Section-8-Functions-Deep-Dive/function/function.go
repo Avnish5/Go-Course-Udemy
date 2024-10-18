@@ -5,7 +5,7 @@ import "fmt"
 // giving custom type name to a function
 type tranformfn func(int) int
 
-func main() {
+func PracticeFunction() {
 
 	numbers := []int{1, 2, 3, 4}
 	moreNumbers := []int{5, 2, 3}

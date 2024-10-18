@@ -3,36 +3,20 @@ package main
 import "fmt"
 
 func main() {
+
 	numbers := []int{1, 2, 3}
-
-	transformed := transformNumbers(&numbers, func(val int) int {
-		return val * 2
-	})
-
-	double := createTranformer(2)
-	triple := createTranformer(3)
-
-	doubled := transformNumbers(&numbers, double)
-	tripled := transformNumbers(&numbers, triple)
-
-	fmt.Println(transformed)
-	fmt.Println(doubled)
-	fmt.Println(tripled)
+	fmt.Println("Sum:", sum(numbers...))     // Output: Sum: 6
+	fmt.Println("Sum:", sum(10, 20, 30, 40)) // Output: Sum: 100
+	fmt.Println("Sum:", sum())               // Output: Sum: 0
 }
 
-func transformNumbers(numbers *[]int, transform func(int) int) []int {
-	dNumbers := []int{}
+func sum(numbers ...int) int {
+	total := 0
 
-	for _, val := range *numbers {
-		dNumbers = append(dNumbers, transform(val))
+	for _, number := range numbers {
+		total += number
 	}
 
-	return dNumbers
-}
+	return total
 
-func createTranformer(factor int) func(int) int {
-
-	return func(number int) int {
-		return number * factor
-	}
 }

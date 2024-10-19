@@ -4,13 +4,28 @@ import "fmt"
 
 func Practice1() {
 
-	array := [7]int{10, 20, 30, 40, 50, 60, 70}
+	numbers := []int{1, 2, 3, 4}
+	doubled := transformNumbers(&numbers, double)
+	tripled := transformNumbers(&numbers, triple)
 
-	// Create a slice from the array
-	slice := array[1:4] // Slice includes elements at index 1, 2, and 3
+	fmt.Println(doubled)
+	fmt.Println(tripled)
 
-	// Display length and capacity
-	fmt.Println("Slice:", slice)                  // Output: Slice: [20 30 40]
-	fmt.Println("Length of slice:", len(slice))   // Output: Length of slice: 3
-	fmt.Println("Capacity of slice:", cap(slice)) // Output: Capacity of slice: 4
+}
+
+func transformNumbers(numbers *[]int, transfrom func(int) int) []int {
+	dNumbers := []int{}
+	for _, val := range *numbers {
+		dNumbers = append(dNumbers, transfrom(val))
+	}
+
+	return dNumbers
+}
+
+func double(val int) int {
+	return val * 2
+}
+
+func triple(val int) int {
+	return val * 3
 }

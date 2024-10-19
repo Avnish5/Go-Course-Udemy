@@ -5,6 +5,12 @@ import (
 	"fmt"
 )
 
+type Age int
+
+func (a Age) log() {
+	fmt.Print(a)
+}
+
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
@@ -23,6 +29,10 @@ func main() {
 	appuser.OutputUserData()
 	appuser.ClearUserData()
 	appuser.OutputUserData()
+
+	var age Age = 5
+	age.log()
+
 }
 
 func getUserData(promptText string) string {
